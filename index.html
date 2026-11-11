@@ -1,65 +1,1479 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10152f">
 <title>Tech Rescue Mission!</title>
+
 <style>
-:root{--navy:#14213d;--blue:#4361ee;--cyan:#4cc9f0;--pink:#f72585;--yellow:#ffd166;--green:#06d6a0;--cream:#f7f8ff;--ink:#25324a}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 10%,#dff7ff,transparent 30%),radial-gradient(circle at 90% 25%,#ffe2f1,transparent 25%),#f5f6ff;min-height:100vh;padding:16px}
-button{font:inherit;cursor:pointer;border:0}button:focus-visible{outline:3px solid #ff9f1c;outline-offset:3px}
-.shell{max-width:1050px;margin:auto}.hero{background:linear-gradient(125deg,#14213d,#293b79 60%,#4361ee);color:white;border-radius:26px;padding:22px 26px;position:relative;overflow:hidden;box-shadow:0 12px 30px #26356825}
-.hero:after{content:"🚀";position:absolute;font-size:100px;right:18px;top:0;opacity:.18;transform:rotate(-15deg)}.eyebrow{font-size:.78rem;letter-spacing:2px;font-weight:900;color:var(--yellow)}h1{margin:5px 0;font-size:clamp(1.7rem,4vw,2.8rem);line-height:1.05}.hero p{margin:8px 0 0;max-width:650px;color:#e5edff}
-.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}.toggle{background:white;color:var(--navy);border:2px solid #e5e9fa;border-radius:14px;padding:9px 13px;font-weight:800;box-shadow:0 3px 0 #dce2f5}.toggle.on{background:#e4fff6;border-color:#06d6a0}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.stat{background:#fff;border-radius:14px;padding:8px 14px;box-shadow:0 3px 12px #24305b0c;font-weight:800}.stat span{color:var(--blue)}
-.tabs{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}.tab{flex:1;min-width:130px;background:#e7eaf8;color:#52607d;border-radius:15px;padding:12px;font-weight:900}.tab.active{background:var(--blue);color:white;box-shadow:0 5px 0 #2d43b4}
-.panel{display:none;background:white;border:1px solid #e9edfa;border-radius:24px;padding:clamp(14px,3vw,25px);box-shadow:0 12px 30px #24305b0c}.panel.active{display:block}.mission{background:#eef5ff;border-left:5px solid var(--blue);border-radius:12px;padding:12px 15px;font-weight:700;margin-bottom:16px}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}.sectionhead h2{margin:0;color:var(--navy)}.small{font-size:.88rem;color:#71809a}
-.vocab-layout{display:grid;grid-template-columns:1fr .8fr;gap:16px}.device-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.device{border:2px solid #e7eaf5;border-radius:18px;padding:12px;background:linear-gradient(180deg,#fff,#f8faff);text-align:center;min-height:140px;transition:.15s}.device:hover{transform:translateY(-2px);border-color:#a8b7ff}.device.selected{border-color:var(--pink);background:#fff0f7}.device.matched{border-color:var(--green);background:#eafff8;cursor:default}.device .art{font-size:46px;display:block;filter:drop-shadow(0 4px 2px #1e2a4515)}.device .name{font-weight:900;color:var(--navy);margin-top:4px}.device .hint{font-size:.75rem;color:#7c89a1}
-.wordbank{background:#f6f8ff;border-radius:18px;padding:14px}.wordbank h3{margin:0 0 10px;color:var(--navy)}.words{display:grid;gap:8px}.word{background:white;border:2px solid #dce3fa;color:#344a9a;border-radius:12px;padding:10px;font-weight:900;text-align:center}.word.chosen{background:#e9edff;border-color:var(--blue)}.word.used{opacity:.28;pointer-events:none}.feedback{min-height:30px;margin:12px 0;font-weight:900;text-align:center}.good{color:#008b68}.bad{color:#d92d69}.action{background:linear-gradient(120deg,#06b88d,#06d6a0);color:#063d35;padding:12px 20px;border-radius:14px;font-weight:950;box-shadow:0 4px 0 #009b75}.action.secondary{background:#eef1ff;color:#3546a3;box-shadow:none}.action:disabled{opacity:.4;cursor:not-allowed}
-.scene{min-height:150px;background:linear-gradient(135deg,#eff8ff,#f9f0ff);border:2px dashed #c9d5f7;border-radius:20px;display:grid;place-items:center;font-size:70px;margin:12px 0}.sentence{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;min-height:66px;background:#f4f6ff;border:2px dashed #cdd5f0;border-radius:16px;padding:10px}.sentence .word{cursor:pointer}.pool{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}.pool .word{cursor:pointer}.progress{height:9px;background:#e8ecfa;border-radius:10px;overflow:hidden;margin:10px 0}.progress div{height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));width:0;transition:width .3s}
-.sequence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.storycard{background:#f8faff;border:2px solid #e3e8f7;border-radius:17px;padding:13px;text-align:center}.storycard .sceneicon{font-size:42px}.storycard .slot{margin-top:9px;background:white;border:2px dashed #cbd4ef;border-radius:12px;min-height:54px;padding:8px;font-weight:800}.storycard select{width:100%;margin-top:8px;border:2px solid #dce3fa;border-radius:10px;padding:8px;background:white;font-weight:700}
-.poster{background:linear-gradient(140deg,#fff9e6,#fff0f7);border:3px solid var(--yellow);border-radius:22px;padding:18px;text-align:center}.poster .cat{font-size:75px}.poster h3{font-size:2rem;color:var(--pink);margin:0}.poster input{padding:11px;border:2px solid #d9dff3;border-radius:12px;font:inherit;width:min(100%,420px);margin:7px}.poster label{display:block;font-weight:800;margin-top:10px}.finish{display:none;text-align:center;padding:18px;background:#eafff8;border-radius:18px;margin-top:12px}.finish.show{display:block}.footer{text-align:center;color:#8290aa;font-size:.8rem;padding:15px}
-@media(max-width:650px){body{padding:9px}.hero{padding:18px}.vocab-layout{grid-template-columns:1fr}.device-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sequence-grid{grid-template-columns:1fr}.tabs{gap:6px}.tab{min-width:calc(50% - 6px);font-size:.9rem}.scene{min-height:115px}.hero:after{font-size:75px;right:3px}}
+:root {
+  --navy:#10152f;
+  --navy2:#1b2850;
+  --blue:#637cff;
+  --cyan:#57e8ff;
+  --pink:#ff65bd;
+  --yellow:#ffe37c;
+  --green:#48edb7;
+  --white:#fff;
+  --ink:#273454;
+  --muted:#8290ae;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  min-height:100vh;
+  padding:22px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 8% 10%,#b5edff 0,transparent 25%),
+    radial-gradient(circle at 95% 5%,#ffd2ef 0,transparent 26%),
+    radial-gradient(circle at 50% 100%,#c9c8ff 0,transparent 35%),
+    linear-gradient(135deg,#edf3ff,#f7f1ff);
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+
+body:before,body:after {
+  content:"";
+  position:fixed;
+  width:250px;height:250px;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(70px);
+  opacity:.25;
+  z-index:-1;
+  animation:floatGlow 9s ease-in-out infinite alternate;
+}
+body:before {background:#55dfff;top:25%;left:-120px}
+body:after {background:#ff65bd;bottom:5%;right:-120px;animation-delay:2s}
+
+button {
+  font:inherit;
+  border:0;
+  cursor:pointer;
+  transition:transform .2s,box-shadow .2s,filter .2s;
+}
+button:hover:not(:disabled) {
+  transform:translateY(-4px);
+  filter:brightness(1.06);
+}
+button:active:not(:disabled) {transform:scale(.97)}
+button:disabled {opacity:.4;cursor:not-allowed}
+
+.shell {max-width:1160px;margin:auto}
+
+.hero {
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  padding:clamp(28px,5vw,55px);
+  border-radius:34px;
+  color:white;
+  background:
+    radial-gradient(circle at 80% 20%,#627aff65,transparent 30%),
+    linear-gradient(120deg,#10152f,#202f66 65%,#5354bd);
+  border:1px solid #ffffff30;
+  box-shadow:0 24px 65px #1a285c35;
+  animation:heroEnter .8s ease both;
+}
+
+.hero:before {
+  content:"";
+  position:absolute;
+  width:360px;height:360px;
+  border:1px solid #78eaff55;
+  border-radius:50%;
+  right:-100px;top:-190px;
+  box-shadow:0 0 0 35px #78eaff0c,0 0 0 75px #78eaff08;
+  animation:rotate 35s linear infinite;
+  z-index:-1;
+}
+
+.hero:after {
+  content:"🚀";
+  position:absolute;
+  font-size:clamp(90px,15vw,155px);
+  right:7%;bottom:-25px;
+  opacity:.2;
+  transform:rotate(-15deg);
+  animation:rocketFloat 4s ease-in-out infinite;
+  z-index:-1;
+}
+
+.eyebrow {
+  color:var(--yellow);
+  font-size:.78rem;
+  font-weight:950;
+  letter-spacing:3px;
+}
+
+h1 {
+  margin:12px 0;
+  font-size:clamp(2.2rem,6vw,4.3rem);
+  line-height:.98;
+  letter-spacing:-2px;
+  text-shadow:0 5px 25px #0003;
+}
+
+.hero p {
+  max-width:690px;
+  color:#e5ebff;
+  line-height:1.7;
+  font-size:1.04rem;
+}
+
+.toolbar {
+  display:flex;
+  flex-wrap:wrap;
+  gap:11px;
+  margin:19px 0;
+}
+
+.toggle {
+  background:#ffffffd9;
+  color:var(--navy);
+  padding:12px 17px;
+  border-radius:15px;
+  font-weight:850;
+  box-shadow:0 5px 0 #d8def0,0 8px 18px #26345a12;
+}
+
+.toggle.on {
+  background:#dffff2;
+  color:#087b5d;
+  box-shadow:0 5px 0 #a8efd7;
+}
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+  margin:18px 0;
+}
+
+.stat {
+  position:relative;
+  overflow:hidden;
+  padding:17px;
+  border:1px solid #ffffff;
+  border-radius:19px;
+  background:#ffffffdf;
+  box-shadow:0 10px 25px #27355b0c;
+  font-weight:900;
+  animation:statEnter .65s ease both;
+}
+
+.stat:nth-child(2){animation-delay:.1s}
+.stat:nth-child(3){animation-delay:.2s}
+
+.stat span {color:#526be8;font-size:1.15rem}
+.stat.pop {animation:statPop .5s ease}
+
+.phasebar {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:22px 0;
+}
+
+.phase {
+  position:relative;
+  overflow:hidden;
+  text-align:left;
+  min-height:91px;
+  padding:17px;
+  border-radius:20px;
+  color:#7582a1;
+  background:#e2e8f8;
+  border:1px solid #d5def4;
+  font-weight:950;
+}
+
+.phase .phase-no {
+  display:block;
+  font-size:.7rem;
+  letter-spacing:1.5px;
+  margin-bottom:7px;
+}
+
+.phase.active {
+  color:white;
+  background:linear-gradient(135deg,#557bff,#7d64ed);
+  border-color:#8b9cff;
+  box-shadow:0 7px 0 #3949af,0 14px 25px #596be44a;
+  animation:activePhase 2.5s ease-in-out infinite;
+}
+
+.phase.done {
+  background:linear-gradient(130deg,#dffff2,#c8ffe9);
+  color:#07825f;
+  border-color:#85e9c5;
+}
+
+.phase.locked {cursor:not-allowed}
+
+.panel {
+  display:none;
+  position:relative;
+  padding:clamp(19px,4vw,35px);
+  background:#ffffffed;
+  border:1px solid #ffffff;
+  border-radius:29px;
+  box-shadow:0 20px 55px #28355b15;
+  backdrop-filter:blur(12px);
+}
+
+.panel.active {
+  display:block;
+  animation:panelEnter .55s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.mission {
+  position:relative;
+  padding:19px 22px;
+  margin-bottom:23px;
+  border-radius:17px;
+  border-left:5px solid var(--blue);
+  background:linear-gradient(110deg,#edf3ff,#f4edff);
+  color:#35456d;
+  line-height:1.7;
+  font-weight:750;
+}
+
+.sectionhead {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:17px;
+}
+
+.sectionhead h2 {
+  margin:0;
+  color:var(--navy);
+  font-size:1.65rem;
+}
+
+.small {font-size:.85rem;color:var(--muted);font-weight:750}
+
+.vocab-layout {
+  display:grid;
+  grid-template-columns:1fr .72fr;
+  gap:19px;
+}
+
+.device-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.device {
+  min-height:155px;
+  padding:15px;
+  text-align:center;
+  border-radius:21px;
+  border:2px solid #e2e8f8;
+  background:linear-gradient(155deg,#fff,#f3f6ff);
+  box-shadow:0 7px 17px #25345a0a;
+  transition:.25s;
+}
+
+.device:hover:not(:disabled) {
+  border-color:#8c9fff;
+  box-shadow:0 13px 25px #657aff20;
+}
+
+.device.selected {
+  border:3px solid #ff70bb;
+  background:linear-gradient(145deg,#fff2f9,#ffe8f5);
+  box-shadow:0 0 0 5px #ff70bb20,0 10px 25px #ff70bb22;
+  animation:selectPulse 1.3s infinite;
+}
+
+.device.matched {
+  border-color:#4edbb0;
+  background:linear-gradient(145deg,#eafff6,#d9fff0);
+  animation:matchPop .5s ease;
+}
+
+.device .art {
+  display:block;
+  font-size:49px;
+  filter:drop-shadow(0 5px 3px #1e2a4515);
+  animation:deviceFloat 3s ease-in-out infinite;
+}
+
+.device:nth-child(even) .art {animation-delay:.5s}
+
+.device .name {
+  display:block;
+  font-weight:950;
+  color:var(--navy);
+  margin-top:7px;
+}
+
+.device .hint {
+  display:block;
+  font-size:.74rem;
+  color:#8490aa;
+  margin-top:5px;
+}
+
+.wordbank {
+  padding:19px;
+  border-radius:22px;
+  border:1px solid #e0e6fa;
+  background:linear-gradient(155deg,#f0f4ff,#f9f0ff);
+}
+
+.wordbank h3 {margin:0 0 14px;color:var(--navy)}
+.words {display:grid;gap:10px}
+
+.word {
+  padding:12px;
+  text-align:center;
+  color:#384a9c;
+  background:white;
+  border:2px solid #dce3fa;
+  border-radius:14px;
+  font-weight:900;
+  box-shadow:0 4px 0 #e7ebf8;
+}
+
+.word:hover:not(:disabled) {
+  border-color:#879bff;
+  box-shadow:0 5px 0 #d6ddff;
+}
+
+.word.used {
+  opacity:.2;
+  pointer-events:none;
+}
+
+.feedback {
+  min-height:35px;
+  margin:17px 0;
+  text-align:center;
+  font-weight:950;
+  font-size:1rem;
+}
+
+.good {color:#008b68;animation:feedbackPop .4s ease}
+.bad {color:#d92d69;animation:shake .35s ease}
+
+.action {
+  padding:14px 23px;
+  border-radius:16px;
+  color:#073c35;
+  background:linear-gradient(120deg,#36dcae,#75f3ce);
+  font-weight:950;
+  box-shadow:0 6px 0 #0aa981,0 10px 20px #28d6a530;
+}
+
+.action.secondary {
+  color:#3546a3;
+  background:#edf1ff;
+  box-shadow:0 5px 0 #dbe2fa;
+}
+
+.action.purple {
+  color:white;
+  background:linear-gradient(120deg,#697dff,#a073ff);
+  box-shadow:0 6px 0 #4b55c8,0 10px 20px #697dff30;
+}
+
+.action.special {
+  background:linear-gradient(120deg,#ffb74d,#ffe17a);
+  color:#674000;
+  box-shadow:0 6px 0 #e6a333,0 10px 25px #e9b23c40;
+  animation:specialPulse 1.7s infinite;
+}
+
+.action:disabled {box-shadow:none}
+
+.scene {
+  min-height:180px;
+  display:grid;
+  place-items:center;
+  margin:17px 0;
+  font-size:78px;
+  border-radius:25px;
+  border:2px dashed #bfcdf3;
+  background:radial-gradient(circle,#fff,#edf3ff 65%,#f5efff);
+  box-shadow:inset 0 0 35px #5275ff0c;
+  animation:sceneIn .5s ease;
+}
+
+.sentence {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:75px;
+  padding:13px;
+  border:2px dashed #cbd5f1;
+  border-radius:19px;
+  background:#f4f6ff;
+}
+
+.sentence .word {cursor:pointer}
+.pool {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+  margin:17px 0;
+}
+
+.pool .word {cursor:pointer}
+
+.progress {
+  height:13px;
+  margin:13px 0;
+  border-radius:20px;
+  background:#e8ecfa;
+  overflow:hidden;
+}
+
+.progress div {
+  height:100%;
+  width:0;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--cyan),var(--blue),#ad79ff);
+  transition:width .7s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 0 12px #667fff65;
+}
+
+.sequence-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.storycard {
+  padding:17px;
+  text-align:center;
+  border-radius:20px;
+  border:2px solid #e2e8f7;
+  background:linear-gradient(155deg,#f8faff,#f2f0ff);
+  box-shadow:0 7px 16px #25345a0a;
+  transition:.25s;
+}
+
+.storycard:focus-within {
+  border-color:#8096ff;
+  transform:translateY(-3px);
+}
+
+.storycard .sceneicon {
+  font-size:46px;
+  margin:13px 0;
+  animation:deviceFloat 3s ease-in-out infinite;
+}
+
+.storycard select {
+  width:100%;
+  margin-top:10px;
+  padding:11px;
+  border:2px solid #dce3fa;
+  border-radius:12px;
+  background:white;
+  color:#31416b;
+  font-weight:750;
+}
+
+.poster {
+  padding:25px;
+  text-align:center;
+  border:3px solid var(--yellow);
+  border-radius:27px;
+  background:
+    radial-gradient(circle at 15% 0,#fff9d9,transparent 38%),
+    linear-gradient(140deg,#fffaf0,#fff0f8);
+  box-shadow:0 12px 30px #f2c34b20;
+}
+
+.poster .cat {
+  font-size:85px;
+  filter:drop-shadow(0 7px 4px #252b4020);
+  animation:catBounce 2.5s infinite;
+}
+
+.poster h3 {
+  margin:5px;
+  color:var(--pink);
+  font-size:clamp(2rem,5vw,2.8rem);
+  letter-spacing:2px;
+}
+
+.poster p {color:#6e6680}
+
+.poster label {
+  display:block;
+  margin-top:14px;
+  color:#4a3d68;
+  font-weight:900;
+}
+
+.poster input {
+  width:min(100%,430px);
+  margin:8px;
+  padding:13px;
+  border:2px solid #d9dff3;
+  border-radius:13px;
+  font:inherit;
+  background:white;
+}
+
+.finish {
+  display:none;
+  margin-top:20px;
+  padding:25px;
+  text-align:center;
+  border:2px solid #b9f3dc;
+  border-radius:23px;
+  background:linear-gradient(130deg,#e6fff6,#edf2ff);
+}
+
+.finish.show {
+  display:block;
+  animation:finishEnter .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.finish .celebration {
+  font-size:65px;
+  animation:celebrate 1.5s infinite;
+}
+
+@keyframes heroEnter {
+  from {opacity:0;transform:translateY(-25px)}
+  to {opacity:1;transform:translateY(0)}
+}
+@keyframes panelEnter {
+  from {opacity:0;transform:translateY(20px) scale(.985)}
+  to {opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes statEnter {
+  from {opacity:0;transform:translateY(12px)}
+  to {opacity:1;transform:translateY(0)}
+}
+@keyframes statPop {50% {transform:scale(1.1)}}
+@keyframes rotate {to {transform:rotate(360deg)}}
+@keyframes rocketFloat {50% {transform:translateY(-14px) rotate(-10deg)}}
+@keyframes floatGlow {to {transform:translate(30px,-25px) scale(1.15)}}
+@keyframes deviceFloat {50% {transform:translateY(-5px)}}
+@keyframes selectPulse {50% {box-shadow:0 0 0 8px #ff70bb13}}
+@keyframes matchPop {50% {transform:scale(1.07)}}
+@keyframes sceneIn {
+  from {opacity:0;transform:scale(.8)}
+  to {opacity:1;transform:scale(1)}
+}
+@keyframes feedbackPop {
+  from {opacity:0;transform:scale(.8)}
+  to {opacity:1;transform:scale(1)}
+}
+@keyframes shake {
+  25% {transform:translateX(-5px)}
+  75% {transform:translateX(5px)}
+}
+@keyframes activePhase {
+  50% {box-shadow:0 7px 0 #3949af,0 14px 30px #596be45e}
+}
+@keyframes specialPulse {
+  50% {filter:brightness(1.1);transform:translateY(-3px)}
+}
+@keyframes catBounce {50% {transform:translateY(-10px)}}
+@keyframes finishEnter {
+  from {opacity:0;transform:scale(.9)}
+  to {opacity:1;transform:scale(1)}
+}
+@keyframes celebrate {
+  25% {transform:rotate(-10deg) scale(1.1)}
+  75% {transform:rotate(10deg) scale(1.1)}
+}
+
+@media(max-width:720px) {
+  body {padding:9px}
+  .hero {padding:25px;border-radius:25px}
+  .stats {grid-template-columns:1fr}
+  .phasebar {grid-template-columns:repeat(2,1fr);gap:9px}
+  .phase {min-height:75px;padding:13px}
+  .vocab-layout {grid-template-columns:1fr}
+  .sequence-grid {grid-template-columns:1fr}
+  .scene {min-height:130px}
+  .device {min-height:135px}
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after {
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+
+@media print {
+  body {background:white;padding:0}
+  .hero,.toolbar,.stats,.phasebar,.mission,.feedback,.action,.footer {display:none!important}
+  .panel {display:none!important;box-shadow:none;border:0}
+  .panel.active {display:block!important}
+  .poster {border:2px solid #333;box-shadow:none}
+  .poster input {border:1px solid #888}
+}
 </style>
 </head>
-<body><main class="shell">
-<header class="hero"><div class="eyebrow">FAMILY CO-OP • ENGLISH • LEVEL A1</div><h1>TECH RESCUE MISSION!</h1><p>¡El gatito se perdió! Usen la tecnología, armen la historia y publiquen un anuncio para ayudarlo a volver a casa. ¡Cada misión suma estrellas!</p></header>
-<div class="toolbar"><button id="musicBtn" class="toggle" aria-pressed="false">🎵 Música: OFF</button><button id="soundBtn" class="toggle on" aria-pressed="true">🔊 Efectos: ON</button><button id="resetBtn" class="toggle">↻ Reiniciar misión</button></div>
-<div class="stats"><div class="stat">⭐ Estrellas: <span id="stars">0</span></div><div class="stat">🎯 Misión: <span id="progressText">1 / 3</span></div><div class="stat">🏆 <span id="rank">Junior Tech</span></div></div>
-<nav class="tabs"><button class="tab active" data-panel="p1">1. Inventory</button><button class="tab" data-panel="p2">2. Sentence Lab</button><button class="tab" data-panel="p3">3. Story Steps</button><button class="tab" data-panel="p4">4. Cat Rescue</button></nav>
-<section id="p1" class="panel active"><div class="mission">🧩 <b>MISSION 1 — Tech Inventory</b><br>Elegí un objeto y después tocá su nombre en inglés. ¡Cada pareja correcta queda marcada!</div><div class="sectionhead"><h2>Find the device!</h2><span class="small" id="vocabCount">0 / 10 matched</span></div><div class="vocab-layout"><div id="deviceGrid" class="device-grid"></div><aside class="wordbank"><h3>🔤 Word bank</h3><div id="wordBank" class="words"></div><p class="small" style="margin-top:12px">Tip: conversen qué dispositivo usarían para cada tarea.</p></aside></div><div id="fb1" class="feedback"></div><div style="text-align:center"><button class="action" id="next1" disabled>Mission 2 →</button></div></section>
-<section id="p2" class="panel"><div class="mission">🛠️ <b>MISSION 2 — Sentence Lab</b><br>Ordená las palabras. Tocá una palabra ya colocada para devolverla al banco.</div><div class="sectionhead"><h2 id="sentenceTitle">Sentence 1</h2><span class="small" id="sentenceCount">1 / 6</span></div><div class="progress"><div id="sentenceProgress"></div></div><div id="scene" class="scene">📸</div><div id="target" class="sentence"></div><div id="pool" class="pool"></div><div id="fb2" class="feedback"></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="action secondary" id="clearSentence">↶ Clear</button><button class="action" id="checkSentence">Check sentence</button><button class="action" id="nextSentence" disabled>Next →</button></div></section>
-<section id="p3" class="panel"><div class="mission">🧭 <b>MISSION 3 — Step by Step</b><br>La historia se mezcló. Elegí qué oración corresponde a cada escena, del paso 1 al 6.</div><div class="sectionhead"><h2>Put the story in order</h2><span class="small">6 scenes</span></div><div id="sequenceGrid" class="sequence-grid"></div><div id="fb3" class="feedback"></div><div style="text-align:center"><button class="action" id="checkSequence">Check the story</button><button class="action" id="next3" disabled>Final mission →</button></div></section>
-<section id="p4" class="panel"><div class="mission">🐾 <b>FINAL MISSION — Cat Rescue Poster</b><br>¡Creen el anuncio! Completen los datos y escriban una frase con <i>Let's…</i>. Lean la frase en voz alta en familia.</div><div class="poster"><div class="cat">🐈</div><h3>MISSING CAT!</h3><p>Help us find our furry friend!</p><label for="catName">The cat's name</label><input id="catName" placeholder="e.g. Whiskers"><label for="catPlace">Last seen</label><input id="catPlace" placeholder="e.g. in the park"><label for="catPhrase">Our plan (Let's…)</label><input id="catPhrase" placeholder="Let's take a photo and post an ad."><div style="margin-top:12px"><button class="action" id="publish">📢 Publish poster</button></div></div><div id="finish" class="finish"><div style="font-size:55px">🎉🐱🏡</div><h2>MISSION COMPLETE!</h2><p>The cat is safe! You are Tech Rescue Heroes!</p><p id="finalScore"></p><button class="action secondary" onclick="window.print()">🖨️ Print poster / Save PDF</button></div><div id="fb4" class="feedback"></div></section>
-<div class="footer">Tech Rescue Mission • Tap, learn, collaborate! • Designed for netbooks and mobile screens</div>
+
+<body>
+<main class="shell">
+
+<header class="hero">
+  <div class="eyebrow">FAMILY CO-OP • ENGLISH • LEVEL A1</div>
+  <h1>TECH RESCUE MISSION!</h1>
+  <p>¡El gatito se perdió! Usen la tecnología, armen la historia y publiquen un anuncio para ayudarlo a volver a casa. ¡Cada misión suma estrellas!</p>
+</header>
+
+<div class="toolbar">
+  <button id="musicBtn" class="toggle" aria-pressed="false">🎵 Música: AUTO</button>
+  <button id="soundBtn" class="toggle on" aria-pressed="true">🔊 Efectos: ON</button>
+  <button id="resetBtn" class="toggle">↻ Reiniciar misión</button>
+</div>
+
+<div class="stats">
+  <div class="stat" id="starStat">⭐ Estrellas: <span id="stars">0</span></div>
+  <div class="stat">🎯 Misión: <span id="progressText">0 / 4</span></div>
+  <div class="stat">🏆 <span id="rank">Junior Tech</span></div>
+</div>
+
+<nav class="phasebar" aria-label="Mission phases">
+  <button class="phase active" data-panel="p1"><span class="phase-no">PHASE 01</span>Inventory</button>
+  <button class="phase locked" data-panel="p2" disabled><span class="phase-no">PHASE 02 · 🔒</span>Sentence Lab</button>
+  <button class="phase locked" data-panel="p3" disabled><span class="phase-no">PHASE 03 · 🔒</span>Story Steps</button>
+  <button class="phase locked" data-panel="p4" disabled><span class="phase-no">PHASE 04 · 🔒</span>Cat Rescue</button>
+</nav>
+
+<!-- PHASE 1 -->
+
+<section id="p1" class="panel active">
+
+<div class="mission">
+  🧩 <b>MISSION 1 — Tech Inventory</b><br>
+  Elegí un objeto y después tocá su nombre en inglés. ¡Cada pareja correcta queda marcada!
+</div>
+
+<div class="sectionhead">
+  <h2>Find the device!</h2>
+  <span class="small" id="vocabCount">0 / 10 matched</span>
+</div>
+
+<div class="vocab-layout">
+  <div id="deviceGrid" class="device-grid"></div>
+
+  <aside class="wordbank">
+    <h3>🔤 Word bank</h3>
+    <div id="wordBank" class="words"></div>
+    <p class="small" style="margin-top:12px">
+    
+    </p>
+  </aside>
+</div>
+
+<div id="fb1" class="feedback"></div>
+
+<div style="text-align:center">
+  <button class="action" id="next1" disabled>Mission 2 →</button>
+</div>
+</section>
+
+<!-- PHASE 2 -->
+
+<section id="p2" class="panel">
+
+<div class="mission">
+  🛠️ <b>MISSION 2 — Sentence Lab</b><br>
+  Ordená las palabras. Tocá una palabra ya colocada para devolverla al banco.
+</div>
+
+<div class="sectionhead">
+  <h2 id="sentenceTitle">Sentence 1</h2>
+  <span class="small" id="sentenceCount">1 / 6</span>
+</div>
+
+<div class="progress"><div id="sentenceProgress"></div></div>
+
+<div id="scene" class="scene">📸</div>
+<div id="target" class="sentence"></div>
+<div id="pool" class="pool"></div>
+
+<div id="fb2" class="feedback"></div>
+
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+  <button class="action secondary" id="clearSentence">↶ Clear</button>
+  <button class="action" id="checkSentence">Check sentence</button>
+  <button class="action" id="nextSentence" disabled>Next →</button>
+</div>
+
+<div id="phase2Complete" style="display:none;text-align:center;margin-top:25px;padding:22px;border-radius:22px;background:linear-gradient(135deg,#e4fff4,#edf0ff);border:2px solid #a9ecd5">
+  <div style="font-size:55px;animation:celebrate 1.5s infinite">🏆✨🚀</div>
+  <h2 style="color:#087b5d">MISSION 2 COMPLETED!</h2>
+  <p>¡Excelente trabajo! Ya están listos para continuar la historia.</p>
+  <button class="action special" id="goPhase3">Continue to Phase 3 →</button>
+</div>
+
+</section>
+
+<!-- PHASE 3 -->
+
+<section id="p3" class="panel">
+
+<div class="mission">
+  🧭 <b>MISSION 3 — Step by Step</b><br>
+  La historia se mezcló. Elegí qué oración corresponde a cada escena, del paso 1 al 6.
+</div>
+
+<div class="sectionhead">
+  <h2>Put the story in order</h2>
+  <span class="small">6 scenes</span>
+</div>
+
+<div id="sequenceGrid" class="sequence-grid"></div>
+<div id="fb3" class="feedback"></div>
+
+<div style="text-align:center">
+  <button class="action" id="checkSequence">Check the story</button>
+  <button class="action" id="next3" disabled>Final mission →</button>
+</div>
+
+</section>
+
+<!-- PHASE 4 -->
+
+<section id="p4" class="panel">
+
+<div class="mission">
+  🐾 <b>FINAL MISSION — Cat Rescue Poster</b><br>
+  ¡Creen el anuncio! Completen los datos y escriban una frase con <i>Let's…</i>. Lean la frase en voz alta en familia.
+</div>
+
+<div class="poster">
+  <div class="cat">🐈</div>
+  <h3>MISSING CAT!</h3>
+  <p>Help us find our furry friend!</p>
+
+  <label for="catName">The cat's name</label>
+  <input id="catName" placeholder="e.g. Whiskers">
+
+  <label for="catPlace">Last seen</label>
+  <input id="catPlace" placeholder="e.g. in the park">
+
+  <label for="catPhrase">Our plan (Let's…)</label>
+  <input id="catPhrase" placeholder="Let's take a photo and post an ad.">
+
+  <div style="margin-top:15px">
+    <button class="action" id="publish">📢 Publish poster</button>
+  </div>
+</div>
+
+<div id="finish" class="finish">
+  <div class="celebration">🎉🐱🏡</div>
+  <h2>MISSION COMPLETE!</h2>
+  <p>The cat is safe! You are Tech Rescue Heroes!</p>
+  <p id="finalScore"></p>
+  <button class="action secondary" id="printBtn">🖨️ Print poster / Save PDF</button>
+</div>
+
+<div id="fb4" class="feedback"></div>
+</section>
+
+<div class="footer">Tech Rescue Mission • Tap, learn, collaborate!</div>
+
 </main>
+
 <script>
-const devices=[["laptop","💻"],["headphones","🎧"],["e-reader","📖"],["printer","🖨️"],["speaker","🔊"],["games console","🎮"],["camera","📸"],["screen","🖥️"],["smart watch","⌚"],["mobile phone","📱"]];
-const sentences=[
-{words:["Matt","turns","on","his","laptop."],icon:"💻"},
-{words:["Matt","takes","a","photo."],icon:"📸"},
-{words:["Matt","uploads","the","photo."],icon:"☁️"},
-{words:["Matt","posts","an","advertisement."],icon:"📢"},
-{words:["They","read","the","comments."],icon:"💬"},
-{words:["Matt","turns","off","his","laptop."],icon:"🌙"}
+
+/* ORIGINAL DEVICE ILLUSTRATIONS — PRESERVED */
+
+const devices=[
+ ["laptop","💻"],
+ ["headphones","🎧"],
+ ["e-reader","📖"],
+ ["printer","🖨️"],
+ ["speaker","🔊"],
+ ["games console","🎮"],
+ ["camera","📸"],
+ ["screen","🖥️"],
+ ["smart watch","⌚"],
+ ["mobile phone","📱"]
 ];
-let stars=0,matched=new Set(),selected=null,si=0,placed=[],seqChecked=false;
+
+const sentences=[
+ {words:["Matt","takes","a","photo."],icon:"📸"},
+ {words:["Matt","turns","on","his","laptop."],icon:"☀️💻"},
+ {words:["Matt","uploads","the","photo."],icon:"📤"},
+ {words:["Matt","posts","an","advertisement."],icon:"📢"},
+ {words:["They","read","the","comments."],icon:"💬"},
+ {words:["Matt","turns","off","his","laptop."],icon:"🌙💻"}
+];
+
+const scenes=[
+ ["📸","Matt takes a photo."],
+ ["☀️💻","Matt turns on his laptop."],
+ ["📤","Matt uploads the photo."],
+ ["📢","Matt posts an advertisement."],
+ ["💬","They read the comments."],
+ ["🌙💻","Matt turns off his laptop."]
+];
+
+let stars=0;
+let matched=new Set();
+let selected=null;
+let si=0;
+let seqChecked=false;
+let completedSentences=new Set();
+
+let musicTimer=null;
+let musicCtx=null;
+let musicOn=false;
+let musicStarted=false;
+
+// NUEVO: órdenes aleatorios independientes para las dos columnas.
+let deviceOrder=[];
+let wordOrder=[];
+
 const $=id=>document.getElementById(id);
-function updateStats(){ $("stars").textContent=stars;$("progressText").textContent=(matched.size===10?1:0)+(si===6?1:0)+(seqChecked?1:0)+" / 3";$("rank").textContent=stars>=20?"Tech Rescue Hero":stars>=10?"Tech Explorer":"Junior Tech";}
-function sound(type="good"){if(!$("soundBtn").classList.contains("on"))return;try{let ctx=new(window.AudioContext||window.webkitAudioContext)();let o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type="sine";o.frequency.value=type==="bad"?180:type==="click"?500:720;g.gain.setValueAtTime(.08,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.18);o.start();o.stop(ctx.currentTime+.2)}catch(e){}}
-function renderVocab(){let grid=$("deviceGrid"),bank=$("wordBank");grid.innerHTML="";bank.innerHTML="";devices.forEach(([name,icon])=>{let b=document.createElement("button");b.className="device"+(matched.has(name)?" matched":"")+(selected===name?" selected":"");b.innerHTML=`<span class="art">${icon}</span><span class="name">${matched.has(name)?name:"??? "}</span><span class="hint">${matched.has(name)?"✓ MATCHED":"Select object"}</span>`;b.disabled=matched.has(name);b.onclick=()=>{selected=name;renderVocab();$("fb1").textContent="Now find the English word!";$("fb1").className="feedback";sound("click")};grid.appendChild(b);let w=document.createElement("button");w.className="word"+(matched.has(name)?" used":"")+(selected===name?" chosen":"");w.textContent=name;w.disabled=matched.has(name);w.onclick=()=>{if(!selected){$("fb1").textContent="First choose a device picture!";$("fb1").className="feedback bad";sound("bad");return}if(selected===name){matched.add(name);stars+=1;$("fb1").textContent="Great match! ⭐ "+name;$("fb1").className="feedback good";selected=null;sound();}else{$("fb1").textContent="Not this one — look carefully!";$("fb1").className="feedback bad";sound("bad")}renderVocab();$("vocabCount").textContent=matched.size+" / 10 matched";$("next1").disabled=matched.size!==10;updateStats()};bank.appendChild(w)});}
-function renderSentence(){let d=sentences[si];placed=[];$("sentenceTitle").textContent="Sentence "+(si+1);$("sentenceCount").textContent=(si+1)+" / "+sentences.length;$("sentenceProgress").style.width=(si/sentences.length*100)+"%";$("scene").textContent=d.icon;$("target").innerHTML="";$("pool").innerHTML="";$("fb2").textContent="";$("fb2").className="feedback";$("nextSentence").disabled=true;$("checkSentence").disabled=false;let words=d.words.map((word,i)=>({word,id:i})).sort(()=>Math.random()-.5);words.forEach(obj=>addTile(obj,$("pool")));updateStats()}
-function addTile(obj,container){let b=document.createElement("button");b.className="word";b.textContent=obj.word;b.dataset.id=obj.id;b.onclick=()=>{if(container===$("pool")){placed.push(obj);$("target").appendChild(b);$("pool").removeChild(b)}else{placed=placed.filter(x=>x.id!==obj.id);$("pool").appendChild(b);$("target").removeChild(b)}sound("click")};container.appendChild(b)}
-function checkSentence(){let actual=Array.from($("target").children).map(b=>b.textContent),expected=sentences[si].words;if(actual.length===expected.length&&actual.every((w,i)=>w===expected[i])){$("fb2").textContent="Perfect sentence! ✨";$("fb2").className="feedback good";$("checkSentence").disabled=true;$("nextSentence").disabled=false;stars+=2;sound();updateStats()}else{$("fb2").textContent="Almost! Check the word order (and the little words).";$("fb2").className="feedback bad";sound("bad")}}
-$("clearSentence").onclick=()=>{Array.from($("target").children).forEach(b=>$("pool").appendChild(b));placed=[];$("fb2").textContent="";$("nextSentence").disabled=true};
-$("checkSentence").onclick=checkSentence;$("nextSentence").onclick=()=>{si++;if(si>=sentences.length){$("sentenceProgress").style.width="100%";$("fb2").textContent="All sentences completed! Mission 2 clear!";$("fb2").className="feedback good";$("nextSentence").disabled=true;$("checkSentence").disabled=true;$("next3").disabled=false;updateStats()}else renderSentence()};
-const scenes=[["💻","Matt turns on his laptop."],["📸","Matt takes a photo."],["☁️","Matt uploads the photo."],["📢","Matt posts an advertisement."],["💬","They read the comments."],["🌙","Matt turns off his laptop."]];
-function renderSequence(){let g=$("sequenceGrid");g.innerHTML="";let options=sentences.map(s=>s.words.join(" "));let shuffled=[...options].sort(()=>Math.random()-.5);scenes.forEach((s,i)=>{let c=document.createElement("div");c.className="storycard";c.innerHTML=`<div style="font-weight:900;color:#4361ee">SCENE ${i+1}</div><div class="sceneicon">${s[0]}</div><select aria-label="Choose sentence for scene ${i+1}"><option value="">Choose the sentence…</option>${shuffled.map(v=>`<option>${v}</option>`).join("")}</select>`;g.appendChild(c)});}
-$("checkSequence").onclick=()=>{let vals=Array.from($("sequenceGrid").querySelectorAll("select")).map(s=>s.value);if(vals.every((v,i)=>v===scenes[i][1])){$("fb3").textContent="Story sequence correct! You're ready to rescue the cat! 🐾";$("fb3").className="feedback good";seqChecked=true;stars+=5;$("next3").disabled=false;sound();updateStats()}else{$("fb3").textContent="Some steps are out of order. Try again!";$("fb3").className="feedback bad";sound("bad")}};
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchPanel(b.dataset.panel));function switchPanel(id){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.panel===id));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===id))}
-$("next1").onclick=()=>switchPanel("p2");$("next3").onclick=()=>switchPanel("p4");
-$("publish").onclick=()=>{if(!$("catName").value.trim()||!$("catPlace").value.trim()||!$("catPhrase").value.trim().toLowerCase().startsWith("let's")){$("fb4").textContent="Fill in all fields. Your plan must start with “Let's…”";$("fb4").className="feedback bad";sound("bad");return}$("finish").classList.add("show");$("finalScore").textContent="Stars earned: "+(stars+3)+" • Poster by the Tech Rescue team";stars+=3;$("fb4").textContent="Poster published!";$("fb4").className="feedback good";sound();updateStats()};
-let musicTimer=null,musicCtx=null,musicOn=false;function musicToggle(){musicOn=!musicOn;$("musicBtn").classList.toggle("on",musicOn);$("musicBtn").textContent="🎵 Música: "+(musicOn?"ON":"OFF");$("musicBtn").setAttribute("aria-pressed",musicOn);if(musicOn){try{musicCtx=new(window.AudioContext||window.webkitAudioContext)();let notes=[523,659,784,659,587,698,880,698],i=0;musicTimer=setInterval(()=>{if(!musicCtx)return;let o=musicCtx.createOscillator(),g=musicCtx.createGain();o.type="triangle";o.frequency.value=notes[i++%notes.length];g.gain.setValueAtTime(.035,musicCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,musicCtx.currentTime+.22);o.connect(g);g.connect(musicCtx.destination);o.start();o.stop(musicCtx.currentTime+.23)},300)}catch(e){}}else{clearInterval(musicTimer);musicTimer=null;if(musicCtx){musicCtx.close();musicCtx=null}}}
-$("musicBtn").onclick=musicToggle;$("soundBtn").onclick=()=>{$("soundBtn").classList.toggle("on");let on=$("soundBtn").classList.contains("on");$("soundBtn").textContent="🔊 Efectos: "+(on?"ON":"OFF");$("soundBtn").setAttribute("aria-pressed",on);if(on)sound("click")};
-$("resetBtn").onclick=()=>{if(!confirm("Restart the whole mission?"))return;stars=0;matched.clear();selected=null;si=0;seqChecked=false;$("finish").classList.remove("show");$("catName").value=$("catPlace").value=$("catPhrase").value="";$("next1").disabled=true;$("next3").disabled=true;$("checkSequence").disabled=false;renderVocab();renderSentence();renderSequence();$("vocabCount").textContent="0 / 10 matched";updateStats();switchPanel("p1")};
-renderVocab();renderSentence();renderSequence();updateStats();
-</script></body></html>
+
+/* SHUFFLE — MEZCLAR ELEMENTOS */
+
+function shuffleArray(array) {
+ let result=[...array];
+
+ for(let i=result.length-1;i>0;i--) {
+  const j=Math.floor(Math.random()*(i+1));
+  [result[i],result[j]]=[result[j],result[i]];
+ }
+
+ return result;
+}
+
+// Se mezcla una sola vez al comenzar cada misión.
+// Así, los elementos no cambian de lugar con cada clic.
+function preparePhase1Order() {
+ deviceOrder=shuffleArray(devices);
+ wordOrder=shuffleArray(devices);
+}
+
+/* SOUND EFFECTS */
+
+function sound(type="good") {
+ if(!$("soundBtn").classList.contains("on"))return;
+
+ try {
+   let ctx=new(window.AudioContext||window.webkitAudioContext)();
+   let o=ctx.createOscillator();
+   let g=ctx.createGain();
+
+   o.connect(g);
+   g.connect(ctx.destination);
+
+   o.type="sine";
+   o.frequency.value=type==="bad"?180:type==="click"?500:720;
+
+   g.gain.setValueAtTime(.08,ctx.currentTime);
+   g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.18);
+
+   o.start();
+   o.stop(ctx.currentTime+.2);
+   o.onended=()=>ctx.close();
+ } catch(e){}
+}
+
+/* STATS AND PROGRESS */
+
+function completedPhaseCount() {
+ return (matched.size===10?1:0)
+ +(completedSentences.size===6?1:0)
+ +(seqChecked?1:0)
+ +($("finish").classList.contains("show")?1:0);
+}
+
+function updateStats() {
+ $("stars").textContent=stars;
+ $("progressText").textContent=completedPhaseCount()+" / 4";
+
+ $("rank").textContent=
+ stars>=20?"Tech Rescue Hero":
+ stars>=10?"Tech Explorer":
+ "Junior Tech";
+
+ $("starStat").classList.remove("pop");
+ void $("starStat").offsetWidth;
+ $("starStat").classList.add("pop");
+
+ updatePhases();
+}
+
+function updatePhases() {
+ let done=[
+  matched.size===10,
+  completedSentences.size===6,
+  seqChecked,
+  $("finish").classList.contains("show")
+ ];
+
+ document.querySelectorAll(".phase").forEach((b,i)=>{
+  let unlocked=i===0||done.slice(0,i).every(Boolean);
+
+  b.disabled=!unlocked;
+  b.classList.toggle("locked",!unlocked);
+  b.classList.toggle("done",done[i]);
+  b.classList.toggle(
+   "active",
+   b.dataset.panel===$("p1").id&&$("p1").classList.contains("active")||
+   b.dataset.panel===$("p2").id&&$("p2").classList.contains("active")||
+   b.dataset.panel===$("p3").id&&$("p3").classList.contains("active")||
+   b.dataset.panel===$("p4").id&&$("p4").classList.contains("active")
+  );
+
+  b.querySelector(".phase-no").textContent=
+   "PHASE 0"+(i+1)+(done[i]?" · ✓":unlocked?"":" · 🔒");
+ });
+}
+
+/* ACTIVITY 1 */
+
+function renderVocab() {
+ let grid=$("deviceGrid");
+ let bank=$("wordBank");
+
+ grid.innerHTML="";
+ bank.innerHTML="";
+
+ // Los dibujos usan un orden aleatorio fijo durante la partida.
+ deviceOrder.forEach(([name,icon])=>{
+  let b=document.createElement("button");
+
+  b.className="device"+
+   (matched.has(name)?" matched":"")+
+   (selected===name?" selected":"");
+
+  b.innerHTML=`
+   <span class="art">${icon}</span>
+   <span class="name">${matched.has(name)?name:"???"}</span>
+   <span class="hint">${matched.has(name)?"✓ MATCHED":"Select object"}</span>
+  `;
+
+  b.disabled=matched.has(name);
+
+  b.onclick=()=>{
+   selected=name;
+   renderVocab();
+   $("fb1").textContent="Now find the English word!";
+   $("fb1").className="feedback";
+   sound("click");
+  };
+
+  grid.appendChild(b);
+ });
+
+ // El banco de palabras también tiene su propio orden aleatorio.
+ wordOrder.forEach(([name])=>{
+  let w=document.createElement("button");
+
+  w.className="word"+(matched.has(name)?" used":"");
+  w.textContent=name;
+  w.disabled=matched.has(name);
+
+  // No se resalta la palabra al seleccionar la imagen.
+  // El alumno debe descubrir la correspondencia.
+
+  w.onclick=()=>{
+   if(!selected) {
+    $("fb1").textContent="First choose a device picture!";
+    $("fb1").className="feedback bad";
+    sound("bad");
+    return;
+   }
+
+   if(selected===name) {
+    matched.add(name);
+    stars+=1;
+
+    $("fb1").textContent="Great match! ⭐ "+name;
+    $("fb1").className="feedback good";
+
+    selected=null;
+    sound();
+   } else {
+    $("fb1").textContent="Not this one — look carefully!";
+    $("fb1").className="feedback bad";
+    sound("bad");
+   }
+
+   renderVocab();
+
+   $("vocabCount").textContent=matched.size+" / 10 matched";
+   $("next1").disabled=matched.size!==10;
+
+   updateStats();
+  };
+
+  bank.appendChild(w);
+ });
+}
+
+/* ACTIVITY 2 */
+
+function renderSentence() {
+ let d=sentences[si];
+
+ $("sentenceTitle").textContent="Sentence "+(si+1);
+ $("sentenceCount").textContent=(si+1)+" / 6";
+
+ $("sentenceProgress").style.width=
+  (completedSentences.size/6*100)+"%";
+
+ $("scene").textContent=d.icon;
+
+ $("target").innerHTML="";
+ $("pool").innerHTML="";
+
+ $("fb2").textContent="";
+ $("fb2").className="feedback";
+
+ $("nextSentence").disabled=true;
+
+ $("checkSentence").disabled=completedSentences.has(si);
+
+ $("phase2Complete").style.display="none";
+
+ let words=d.words.map((word,i)=>({word,id:i}));
+ words.sort(()=>Math.random()-.5);
+
+ words.forEach(obj=>addTile(obj,$("pool")));
+
+ if(completedSentences.has(si)) {
+  $("fb2").textContent="Sentence already completed! ✨";
+  $("fb2").className="feedback good";
+  $("nextSentence").disabled=false;
+  $("checkSentence").disabled=true;
+ }
+
+ updateStats();
+}
+
+function addTile(obj,container) {
+ let b=document.createElement("button");
+
+ b.className="word";
+ b.textContent=obj.word;
+ b.dataset.id=obj.id;
+
+ b.onclick=()=>{
+  if($("checkSentence").disabled)return;
+
+  if(container===$("pool")) {
+   $("target").appendChild(b);
+   container.removeChild(b);
+  } else {
+   $("pool").appendChild(b);
+   container.removeChild(b);
+  }
+
+  sound("click");
+ };
+
+ container.appendChild(b);
+}
+
+function checkSentence() {
+ let actual=Array.from($("target").children).map(b=>b.textContent);
+ let expected=sentences[si].words;
+
+ if(actual.length===expected.length&&actual.every((w,i)=>w===expected[i])) {
+
+  if(!completedSentences.has(si)) {
+   completedSentences.add(si);
+   stars+=2;
+  }
+
+  $("fb2").textContent="Perfect sentence! ✨";
+  $("fb2").className="feedback good";
+
+  $("checkSentence").disabled=true;
+  $("nextSentence").disabled=false;
+
+  sound();
+  updateStats();
+
+  if(completedSentences.size===6) {
+   $("sentenceProgress").style.width="100%";
+   $("phase2Complete").style.display="block";
+   $("nextSentence").disabled=true;
+   $("fb2").textContent="All sentences completed! Mission 2 clear!";
+  }
+
+ } else {
+  $("fb2").textContent="Almost! Check the word order (and the little words).";
+  $("fb2").className="feedback bad";
+  sound("bad");
+ }
+}
+
+$("clearSentence").onclick=()=>{
+ if($("checkSentence").disabled)return;
+
+ Array.from($("target").children).forEach(b=>$("pool").appendChild(b));
+
+ $("fb2").textContent="";
+ $("nextSentence").disabled=true;
+};
+
+$("checkSentence").onclick=checkSentence;
+
+$("nextSentence").onclick=()=>{
+ let next=(si+1)%sentences.length;
+
+ while(completedSentences.has(next)) {
+  next=(next+1)%sentences.length;
+ }
+
+ si=next;
+ renderSentence();
+};
+
+$("goPhase3").onclick=()=>{
+ if(completedSentences.size===6) {
+  sound();
+  switchPanel("p3");
+ }
+};
+
+/* ACTIVITY 3 */
+
+function renderSequence() {
+ let g=$("sequenceGrid");
+ g.innerHTML="";
+
+ let options=sentences.map(s=>s.words.join(" "));
+ let shuffled=[...options].sort(()=>Math.random()-.5);
+
+ scenes.forEach((s,i)=>{
+  let c=document.createElement("div");
+
+  c.className="storycard";
+
+  c.innerHTML=`
+   <div style="font-weight:900;color:#4361ee">SCENE ${i+1}</div>
+   <div class="sceneicon">${s[0]}</div>
+   <select aria-label="Choose sentence for scene ${i+1}">
+    <option value="">Choose the sentence…</option>
+    ${shuffled.map(v=>`<option>${v}</option>`).join("")}
+   </select>
+  `;
+
+  g.appendChild(c);
+ });
+}
+
+$("checkSequence").onclick=()=>{
+ let vals=Array.from(
+  $("sequenceGrid").querySelectorAll("select")
+ ).map(s=>s.value);
+
+ if(vals.every((v,i)=>v===scenes[i][1])) {
+
+  if(!seqChecked)stars+=5;
+
+  $("fb3").textContent=
+   "Story sequence correct! You're ready to rescue the cat! 🐾";
+
+  $("fb3").className="feedback good";
+
+  seqChecked=true;
+  $("next3").disabled=false;
+
+  sound();
+  updateStats();
+
+ } else {
+  $("fb3").textContent="Some steps are out of order. Try again!";
+  $("fb3").className="feedback bad";
+  sound("bad");
+ }
+};
+
+/* PHASE NAVIGATION */
+
+document.querySelectorAll(".phase").forEach(b=>{
+ b.onclick=()=>{
+  if(!b.disabled)switchPanel(b.dataset.panel);
+ };
+});
+
+function switchPanel(id) {
+ let btn=document.querySelector(`.phase[data-panel="${id}"]`);
+
+ if(btn&&btn.disabled)return;
+
+ document.querySelectorAll(".phase").forEach(b=>{
+  b.classList.toggle("active",b.dataset.panel===id);
+ });
+
+ document.querySelectorAll(".panel").forEach(p=>{
+  p.classList.toggle("active",p.id===id);
+ });
+
+ updatePhases();
+
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("next1").onclick=()=>switchPanel("p2");
+$("next3").onclick=()=>switchPanel("p4");
+
+/* FINAL MISSION */
+
+$("publish").onclick=()=>{
+ if(
+  !$("catName").value.trim()||
+  !$("catPlace").value.trim()||
+  !$("catPhrase").value.trim().toLowerCase().startsWith("let's")
+ ) {
+  $("fb4").textContent=
+   "Fill in all fields. Your plan must start with “Let's…”";
+
+  $("fb4").className="feedback bad";
+  sound("bad");
+  return;
+ }
+
+ if(!$("finish").classList.contains("show"))stars+=3;
+
+ $("finish").classList.add("show");
+
+ $("finalScore").textContent=
+  "Stars earned: "+stars+" • Poster by the Tech Rescue team";
+
+ $("fb4").textContent="Poster published! 🎉";
+ $("fb4").className="feedback good";
+
+ sound();
+ updateStats();
+
+ $("finish").scrollIntoView({behavior:"smooth",block:"center"});
+};
+
+$("printBtn").onclick=()=>window.print();
+
+/* BACKGROUND MUSIC */
+
+function startMusic() {
+ if(musicOn)return;
+
+ try {
+  musicCtx=new(window.AudioContext||window.webkitAudioContext)();
+
+  musicCtx.resume();
+
+  musicOn=true;
+  musicStarted=true;
+
+  $("musicBtn").classList.add("on");
+  $("musicBtn").textContent="🎵 Música: ON";
+  $("musicBtn").setAttribute("aria-pressed","true");
+
+  let beat=0;
+
+  const scale=[
+   261.63,329.63,392,523.25,
+   392,440,587.33,440
+  ];
+
+  const bass=[
+   130.81,130.81,164.81,164.81,
+   196,196,146.83,146.83
+  ];
+
+  musicTimer=setInterval(()=>{
+   if(!musicCtx||musicCtx.state!=="running")return;
+
+   let t=musicCtx.currentTime;
+
+   let o=musicCtx.createOscillator();
+   let g=musicCtx.createGain();
+   let filter=musicCtx.createBiquadFilter();
+
+   o.type="sawtooth";
+   o.frequency.setValueAtTime(scale[beat%scale.length],t);
+
+   filter.type="lowpass";
+   filter.frequency.value=1500;
+
+   g.gain.setValueAtTime(.0001,t);
+   g.gain.linearRampToValueAtTime(.022,t+.025);
+   g.gain.exponentialRampToValueAtTime(.0001,t+.26);
+
+   o.connect(filter);
+   filter.connect(g);
+   g.connect(musicCtx.destination);
+
+   o.start(t);
+   o.stop(t+.28);
+
+   if(beat%2===0) {
+    let bo=musicCtx.createOscillator();
+    let bg=musicCtx.createGain();
+
+    bo.type="triangle";
+    bo.frequency.value=bass[(beat/2|0)%bass.length];
+
+    bg.gain.setValueAtTime(.0001,t);
+    bg.gain.linearRampToValueAtTime(.035,t+.02);
+    bg.gain.exponentialRampToValueAtTime(.0001,t+.32);
+
+    bo.connect(bg);
+    bg.connect(musicCtx.destination);
+
+    bo.start(t);
+    bo.stop(t+.34);
+   }
+
+   beat++;
+  },280);
+
+ } catch(e) {
+  musicOn=false;
+  musicStarted=false;
+ }
+}
+
+function stopMusic() {
+ musicOn=false;
+
+ clearInterval(musicTimer);
+ musicTimer=null;
+
+ if(musicCtx) {
+  musicCtx.close();
+  musicCtx=null;
+ }
+
+ $("musicBtn").classList.remove("on");
+ $("musicBtn").textContent="🎵 Música: OFF";
+ $("musicBtn").setAttribute("aria-pressed","false");
+}
+
+function musicToggle() {
+ if(musicOn)stopMusic();
+ else startMusic();
+}
+
+$("musicBtn").onclick=musicToggle;
+
+function unlockMusic(e) {
+ if(musicOn)return;
+
+ if(e.target.closest("#musicBtn"))return;
+
+ startMusic();
+
+ document.removeEventListener("pointerdown",unlockMusic);
+ document.removeEventListener("keydown",unlockMusic);
+}
+
+window.addEventListener("load",()=>{
+ try {
+  let probe=new(window.AudioContext||window.webkitAudioContext)();
+
+  probe.resume().then(()=>{
+   if(probe.state==="running") {
+    probe.close();
+    startMusic();
+   } else {
+    probe.close();
+   }
+  }).catch(()=>probe.close());
+
+ } catch(e){}
+
+ document.addEventListener("pointerdown",unlockMusic);
+ document.addEventListener("keydown",unlockMusic);
+});
+
+/* SOUND EFFECT CONTROL */
+
+$("soundBtn").onclick=()=>{
+ $("soundBtn").classList.toggle("on");
+
+ let on=$("soundBtn").classList.contains("on");
+
+ $("soundBtn").textContent="🔊 Efectos: "+(on?"ON":"OFF");
+ $("soundBtn").setAttribute("aria-pressed",on);
+
+ if(on)sound("click");
+};
+
+/* RESET */
+
+$("resetBtn").onclick=()=>{
+ if(!confirm("Restart the whole mission?"))return;
+
+ stars=0;
+ matched.clear();
+ selected=null;
+ si=0;
+ seqChecked=false;
+ completedSentences.clear();
+
+ // NUEVO: al reiniciar se genera otra combinación aleatoria.
+ preparePhase1Order();
+
+ $("finish").classList.remove("show");
+
+ $("catName").value="";
+ $("catPlace").value="";
+ $("catPhrase").value="";
+
+ $("next1").disabled=true;
+ $("next3").disabled=true;
+ $("checkSequence").disabled=false;
+
+ $("fb1").textContent="";
+ $("fb2").textContent="";
+ $("fb3").textContent="";
+ $("fb4").textContent="";
+
+ $("phase2Complete").style.display="none";
+
+ $("vocabCount").textContent="0 / 10 matched";
+
+ renderVocab();
+ renderSentence();
+ renderSequence();
+
+ updateStats();
+ switchPanel("p1");
+
+ sound("click");
+};
+
+/* INITIALIZATION */
+
+// Se crea la primera combinación aleatoria al entrar.
+preparePhase1Order();
+
+renderVocab();
+renderSentence();
+renderSequence();
+updateStats();
+
+</script>
+</body>
+</html>
